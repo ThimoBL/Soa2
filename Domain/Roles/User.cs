@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Roles
 {
-    public class User(string name, string email, string password)
+    public abstract class User(string name, string email, string password)
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Name { get; set; } = name;

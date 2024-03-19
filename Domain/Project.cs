@@ -10,9 +10,9 @@ namespace DomainService
         public string Description { get; set; } = description;
         public ProductOwner Owner { get; set; } = owner;
         public ProductBacklog ProductBacklog { get; set; } = backlog;
-        //Add version control strategy/ Code archive
+        //ToDo: Add version control strategy/ Code archive
 
-        //Add Pipelines
+        //ToDo: Add Pipelines
 
     }
 }
