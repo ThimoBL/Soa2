@@ -9,9 +9,9 @@ namespace Domain.Backlog
 {
     public class Tasks
     {
-        private Guid Id { get; set; }
-        private string Title { get; set; }
-        private string Description { get; set; }
-        private Developer Developer { get; set; }
+        public Guid Id { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public Developer Developer { get; set; }
     }
 }

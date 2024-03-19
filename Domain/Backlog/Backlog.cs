@@ -8,8 +8,8 @@ namespace Domain.Backlog
 {
     public abstract class Backlog
     {
-        private Guid Id { get; set; } = Guid.NewGuid();
-        private IList<BacklogItem> Items { get; set; } = new List<BacklogItem>();
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public IList<BacklogItem> Items { get; set; } = new List<BacklogItem>();
 
         public virtual void AddBacklogItem(BacklogItem item)
         {
