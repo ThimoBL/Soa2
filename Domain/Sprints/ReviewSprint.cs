@@ -16,5 +16,10 @@ namespace Domain.Sprints
         public ReviewSprint(SprintBacklog sprintBacklog, ScrumMaster scrumMaster) : base(sprintBacklog, scrumMaster)
         {
         }
+
+        public override void Accept(ISprintVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }

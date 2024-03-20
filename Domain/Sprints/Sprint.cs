@@ -29,5 +29,7 @@ namespace Domain.Sprints
         {
             SprintState = sprintState;
         }
+
+        public abstract void Accept(ISprintVisitor visitor);
     }
 }
