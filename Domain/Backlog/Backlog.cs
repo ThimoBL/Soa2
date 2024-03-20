@@ -20,5 +20,10 @@ namespace Domain.Backlog
         {
             Items.Remove(item);
         }
+
+        public virtual void ClearBacklog()
+        {
+            Items.Clear();
+        }
     }
 }

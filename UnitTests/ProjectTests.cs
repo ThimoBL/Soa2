@@ -4,7 +4,7 @@ using DomainService;
 
 namespace UnitTests
 {
-    public class UnitTest1
+    public class ProjectTests
     {
         [Fact]
         public void ProjectCanBeCreated()
