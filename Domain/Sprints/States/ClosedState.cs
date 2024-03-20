@@ -15,7 +15,7 @@ namespace Domain.Sprints.States
 
         public override void NextState()
         {
-            throw new notimplementedexception();
+            throw new NotImplementedException();
         }
     }
 }

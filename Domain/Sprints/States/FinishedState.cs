@@ -16,7 +16,17 @@ namespace Domain.Sprints.States
         public override void NextState()
         {
             //ToDo: Check if sprint is release or review with behavioural/constructial pattern
-            sprint.ChangeState(new ReleaseSprint(sprint));
+            var contextType = sprint.GetType();
+            if (contextType == typeof(ReleaseSprint))
+            {
+                sprint.ChangeState(new ClosedState(sprint));
+            }
+            else if (contextType == typeof(ReviewSprint))
+            {
+                sprint.ChangeState(new ClosedState(sprint));
+            }
+
+            throw new NotImplementedException();
         }
     }
 }
