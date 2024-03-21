@@ -1,4 +1,5 @@
 ﻿using Domain.Roles;
+using Domain.Sprints.Visitor;
 
 namespace Domain.Sprints
 {
@@ -10,9 +11,9 @@ namespace Domain.Sprints
         {
         }
 
-        internal override void Accept(ISprintVisitor visitor)
+        internal override void AcceptSprint(ISprintVisitor visitor)
         {
-            visitor.Visit(this);
+            visitor.VisitRelease(this);
         }
 
         public override void NextSprintState()

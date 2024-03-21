@@ -1,21 +1,16 @@
 ﻿using Domain.Sprints.States;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Domain.Sprints
+namespace Domain.Sprints.Visitor
 {
-    public class SprintVisitor(Sprint sprint) : ISprintVisitor
+    internal class SprintVisitor(Sprint sprint) : ISprintVisitor
     {
-        public void Visit(ReviewSprint review)
+        public void VisitReview(ReviewSprint review)
         {
             Console.WriteLine("Ending sprint with review");
             //ToDo: Do some finished review logic
         }
 
-        public void Visit(ReleaseSprint release)
+        public void VisitRelease(ReleaseSprint release)
         {
             sprint.ChangeState(new ClosedState(sprint));
             Console.WriteLine("Ending sprint with release");

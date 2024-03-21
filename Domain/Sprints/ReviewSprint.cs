@@ -1,8 +1,9 @@
 ﻿using Domain.Roles;
+using Domain.Sprints.Visitor;
 
 namespace Domain.Sprints
 {
-    public class ReviewSprint : Sprint
+    internal class ReviewSprint : Sprint
     {
         //ToDo: add reviews to sprint
 
@@ -11,9 +12,9 @@ namespace Domain.Sprints
             startDate, endDate, scrumMaster)
         {
         }
-        internal override void Accept(ISprintVisitor visitor)
+        internal override void AcceptSprint(ISprintVisitor visitor)
         {
-            visitor.Visit(this);
+            visitor.VisitReview(this);
         }
 
         public override void NextSprintState()

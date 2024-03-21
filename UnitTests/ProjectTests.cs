@@ -1,5 +1,8 @@
 using Domain;
+using Domain.GeneralModels;
 using Domain.Roles;
+using Domain.Sprints.Factory;
+using Moq;
 
 namespace UnitTests
 {
@@ -14,7 +17,7 @@ namespace UnitTests
             var expectedOwner = new ProductOwner("Name", "Email", "Password");
 
             //Act
-            var project = new Project(expectedTitle, expectedDescription, expectedOwner);
+            var project = new Project(expectedTitle, expectedDescription, expectedOwner, new SprintFactory());
 
             //Assert
             Assert.NotNull(project);

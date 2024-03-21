@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Sprints.Visitor;
 
 namespace Domain.Sprints.States
 {
@@ -16,7 +17,7 @@ namespace Domain.Sprints.States
         public override void NextState()
         {
             var visitor = new SprintVisitor(sprint);
-            sprint.Accept(visitor);
+            sprint.AcceptSprint(visitor);
         }
     }
 }

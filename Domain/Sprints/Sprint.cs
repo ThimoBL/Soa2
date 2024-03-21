@@ -1,6 +1,7 @@
 ﻿using Domain.Backlogs;
 using Domain.Roles;
 using Domain.Sprints.States;
+using Domain.Sprints.Visitor;
 
 namespace Domain.Sprints
 {
@@ -27,7 +28,7 @@ namespace Domain.Sprints
             SprintState = sprintState;
         }
 
-        internal abstract void Accept(ISprintVisitor visitor);
+        internal abstract void AcceptSprint(ISprintVisitor visitor);
         public abstract void NextSprintState();
     }
 }

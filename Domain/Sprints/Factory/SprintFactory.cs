@@ -7,20 +7,15 @@ using Domain.Roles;
 
 namespace Domain.Sprints.Factory
 {
-    public class SprintFactory
+    public class SprintFactory() : ISprintFactory
     {
         public Sprint CreateSprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster,
-            SprintType sprintType)
-        {
-            switch (sprintType)
+            SprintType sprintType) =>
+            sprintType switch
             {
-                case SprintType.Release:
-                    return new ReleaseSprint(title, startDate, endDate, scrumMaster);
-                case SprintType.Review:
-                    return new ReviewSprint(title, startDate, endDate, scrumMaster);
-                default:
-                    throw new ArgumentException("Invalid sprint type");
-            }
-        }
+                SprintType.Release => new ReleaseSprint(title, startDate, endDate, scrumMaster),
+                SprintType.Review => new ReviewSprint(title, startDate, endDate, scrumMaster),
+                _ => throw new ArgumentException("Invalid sprint type")
+            };
     }
 }
