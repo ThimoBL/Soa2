@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Backlog
+namespace Domain.Sprints.Factory
 {
-    public class ProductBacklog : Backlog
+    public interface ISprintFactory
     {
     }
 }

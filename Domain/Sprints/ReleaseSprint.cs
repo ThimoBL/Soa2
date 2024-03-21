@@ -1,23 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Backlog;
-using Domain.Roles;
+﻿using Domain.Roles;
 
 namespace Domain.Sprints
 {
     public class ReleaseSprint : Sprint
     {
         //ToDo: add pipeline to sprint
-        public ReleaseSprint(SprintBacklog sprintBacklog, ScrumMaster scrumMaster) : base(sprintBacklog, scrumMaster)
+        public ReleaseSprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster) : base(title,
+            startDate, endDate, scrumMaster)
         {
         }
 
-        public override void Accept(ISprintVisitor visitor)
+        internal override void Accept(ISprintVisitor visitor)
         {
             visitor.Visit(this);
+        }
+
+        public override void NextSprintState()
+        {
+            this.SprintState.NextState();
         }
     }
 }

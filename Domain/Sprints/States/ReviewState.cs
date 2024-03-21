@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Sprints.States
 {
-    public class ReviewState(Sprint sprint) : SprintState(sprint)
+    public class ReviewState(Sprint sprint) : SprintState
     {
         public override void SetState()
         {

@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Backlog
+namespace Domain.Sprints.Factory
 {
-    public class SprintBacklog : Backlog
+    public enum SprintType
     {
+        Release = 0,
+        Review = 1
     }
 }

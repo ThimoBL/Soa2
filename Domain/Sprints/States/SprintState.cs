@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Sprints.States
 {
-    public abstract class SprintState(Sprint sprint)
+    public abstract class SprintState
     {
-        public Sprint Sprint { get; set; } = sprint;
-
         public abstract void SetState();
         public abstract void NextState();
     }

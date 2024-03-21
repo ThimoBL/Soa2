@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Backlog.States
+namespace Domain.Backlogs.States
 {
     public abstract class ItemState(Item item)
     {

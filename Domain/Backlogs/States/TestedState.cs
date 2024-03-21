@@ -4,23 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Backlog.States
+namespace Domain.Backlogs.States
 {
-    public class DoneState(Item item) : ItemState(item)
+    public class TestedState(Item item) : ItemState(item)
     {
         public override void SetState()
         {
-            item.ChangeState(new DoneState(item));
+            item.ChangeState(new TestedState(item));
         }
 
         public override void NextState()
         {
-            item.ChangeState(new ReadyForTestingState(item));
+            throw new NotImplementedException();
         }
 
         public override void PreviousState()
         {
-            item.ChangeState(new DoingState(item));
+            item.ChangeState(new TestingState(item));
         }
     }
 }

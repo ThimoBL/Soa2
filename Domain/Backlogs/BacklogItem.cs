@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Backlog.States;
-using Domain.Roles;
+﻿using Domain.Roles;
 
-namespace Domain.Backlog
+namespace Domain.Backlogs
 {
     public class BacklogItem(string title, string description, int storyPoints, Developer developer) : Item(title,
         description, developer)

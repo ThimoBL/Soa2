@@ -1,12 +1,7 @@
-﻿using Domain.Roles;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Backlog.States;
+﻿using Domain.Backlogs.States;
+using Domain.Roles;
 
-namespace Domain.Backlog
+namespace Domain.Backlogs
 {
     public abstract class Item
     {

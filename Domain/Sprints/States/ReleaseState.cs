@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Sprints.States
 {
-    public class ReleaseState(Sprint sprint) : SprintState(sprint)
+    public class ReleaseState(Sprint sprint) : SprintState
     {
         //ToDo: implement run pipeline method
 

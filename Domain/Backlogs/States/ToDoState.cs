@@ -1,27 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Backlog.States
+namespace Domain.Backlogs.States
 {
-    public class DoingState(Item item) : ItemState(item)
+    public class ToDoState(Item item) : ItemState(item)
     {
         public override void SetState()
         {
-            item.ChangeState(new DoingState(item));
+            item.ChangeState(new ToDoState(item));
         }
 
         public override void NextState()
         {
-            item.ChangeState(new DoneState(item));
+            item.ChangeState(new DoingState(item));
         }
 
         public override void PreviousState()
         {
-            item.ChangeState(new ToDoState(item));
+            throw new NotImplementedException();
         }
     }
 }

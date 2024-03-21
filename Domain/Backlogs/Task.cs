@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Roles;
 
-namespace Domain.Backlog
+namespace Domain.Backlogs
 {
     public class Task : Item
     {

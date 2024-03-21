@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Sprints.States
 {
-    public class ActiveState(Sprint sprint) : SprintState(sprint)
+    public class ActiveState(Sprint sprint) : SprintState
     {
         public override void SetState()
         {

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Backlog
+﻿namespace Domain.Backlogs
 {
-    public abstract class Backlog
+    public class Backlog
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public IList<BacklogItem> Items { get; set; } = new List<BacklogItem>();

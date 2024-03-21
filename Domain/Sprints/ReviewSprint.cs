@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Backlog;
-using Domain.Roles;
+﻿using Domain.Roles;
 
 namespace Domain.Sprints
 {
@@ -13,13 +7,18 @@ namespace Domain.Sprints
         //ToDo: add reviews to sprint
 
         //ToDo: add optional pipeline to sprint (maybe for review sprint but is an assumption)
-        public ReviewSprint(SprintBacklog sprintBacklog, ScrumMaster scrumMaster) : base(sprintBacklog, scrumMaster)
+        public ReviewSprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster) : base(title,
+            startDate, endDate, scrumMaster)
         {
         }
-
-        public override void Accept(ISprintVisitor visitor)
+        internal override void Accept(ISprintVisitor visitor)
         {
             visitor.Visit(this);
+        }
+
+        public override void NextSprintState()
+        {
+            this.SprintState.NextState();
         }
     }
 }
