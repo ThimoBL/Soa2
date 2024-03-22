@@ -1,4 +1,5 @@
 ﻿using Domain.Backlogs;
+using Domain.Pipelines;
 using Domain.Roles;
 using Domain.Sprints.States;
 using Domain.Sprints.Visitor;
@@ -7,13 +8,16 @@ namespace Domain.Sprints
 {
     public abstract class Sprint
     {
-        protected Sprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster)
+        private Pipeline _pipeline;
+        protected Sprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster, Pipeline pipeline)
         {
             Title = title;
             StartDate = startDate;
             EndDate = endDate;
             ScrumMaster = scrumMaster;
             SprintState = new OpenState(this);
+
+            _pipeline = pipeline;
         }
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Title { get; set; }

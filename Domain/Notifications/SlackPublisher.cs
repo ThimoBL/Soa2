@@ -9,9 +9,9 @@ namespace Domain.Notifications
 {
     public class SlackPublisher : IPublisher
     {
-        public void Notify()
+        public void SendNotification(string message)
         {
-            Console.WriteLine($"Slack message send");
+            Console.WriteLine($"Slack notification: " + message);
         }
     }
 }

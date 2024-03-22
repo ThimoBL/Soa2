@@ -9,9 +9,9 @@ namespace Domain.Notifications
 {
     public class MailPublisher : IPublisher
     {
-        public void Notify()
+        public void SendNotification(string message)
         {
-            Console.WriteLine("Mail sent");
+            Console.WriteLine("Mail notification: " + message);
         }
     }
 }

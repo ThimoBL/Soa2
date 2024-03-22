@@ -1,4 +1,5 @@
-﻿using Domain.Roles;
+﻿using Domain.Pipelines;
+using Domain.Roles;
 using Domain.Sprints.Visitor;
 
 namespace Domain.Sprints
@@ -8,10 +9,12 @@ namespace Domain.Sprints
         //ToDo: add reviews to sprint
 
         //ToDo: add optional pipeline to sprint (maybe for review sprint but is an assumption)
-        public ReviewSprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster) : base(title,
-            startDate, endDate, scrumMaster)
+        public ReviewSprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster,
+            Pipeline pipeline) : base(title,
+            startDate, endDate, scrumMaster, pipeline)
         {
         }
+
         internal override void AcceptSprint(ISprintVisitor visitor)
         {
             visitor.VisitReview(this);

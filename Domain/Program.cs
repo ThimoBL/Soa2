@@ -1,4 +1,11 @@
 ﻿using Domain.GeneralModels;
+using Domain.Notifications;
+using Domain.Pipelines;
+using Domain.Pipelines.Actions.AnalyzeAction;
+using Domain.Pipelines.Actions.AnalyzeAction.SonarCube;
+using Domain.Pipelines.Actions.BuildAction;
+using Domain.Pipelines.Actions.PackageAction;
+using Domain.Pipelines.Actions.SourceAction;
 using Domain.Roles;
 using Domain.Sprints;
 using Domain.Sprints.Factory;
@@ -16,6 +23,26 @@ var productOwner = new ProductOwner("Name", "Email", "Password");
 var project = new Project("Project Alpha", "This is a test project", productOwner, sprintFactory);
 var scrumMaster = new ScrumMaster("John Doe", "JohnDoe@email.nl", "password");
 
+productOwner.AddPreferences(new MailPublisher());
+productOwner.AddPreferences(new SlackPublisher());
 
-var sprint = sprintFactory.CreateSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), scrumMaster, SprintType.Release);
+productOwner.Notify();
+
+var pipeline = new Pipeline("Pipeline 1");
+
+// Add actions to pipeline
+var sourceAction = new SourceCompositeAction();
+sourceAction.AddAction(new SourceGithubAction());
+
+var packageAction = new PackageInstallAction();
+
+var buildAction = new BuildCompositeAction();
+buildAction.AddAction(new BuildMavenAction());
+
+pipeline.AddAction(sourceAction);
+pipeline.AddAction(packageAction);
+pipeline.AddAction(buildAction);
+
+pipeline.Run();
+var sprint = sprintFactory.CreateSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), scrumMaster, pipeline, SprintType.Release);
 sprint.NextSprintState();

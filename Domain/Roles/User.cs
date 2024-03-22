@@ -13,16 +13,16 @@ namespace Domain.Roles
         public string Name { get; set; } = name;
         public string Email { get; set; } = email;
         public string Password { get; set; } = password;
-        public List<INotificationService> Preferences { get; set; } = new();
+        public List<IPublisher> Preferences { get; set; } = new();
         public void Notify()
         {
             foreach (var preference in Preferences)
             {
-                preference.SendNotification(Email);
+                preference.SendNotification($"notification send to: {this.Email}");
             }
         }
 
-        public void AddPreferences(INotificationService preference)
+        public void AddPreferences(IPublisher preference)
         {
             Preferences.Add(preference);
         }

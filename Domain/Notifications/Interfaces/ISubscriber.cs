@@ -10,6 +10,6 @@ namespace Domain.Notifications.Interfaces
     public interface ISubscriber
     {
         void Notify();
-        void AddPreferences(INotificationService preference);
+        void AddPreferences(IPublisher preference);
     }
 }

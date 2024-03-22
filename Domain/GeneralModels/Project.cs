@@ -1,4 +1,5 @@
 ﻿using Domain.Backlogs;
+using Domain.Pipelines;
 using Domain.Roles;
 using Domain.Sprints;
 using Domain.Sprints.Factory;
@@ -14,9 +15,8 @@ namespace Domain.GeneralModels
         public ProductOwner Owner { get; set; } = owner;
         public List<Backlog> ProductBacklog { get; set; } = new();
         public IList<Sprint> Sprints { get; set; } = new List<Sprint>();
-        //ToDo: Add version control strategy/ Code archive
 
-        //ToDo: Add Pipelines
+        //ToDo: Add version control strategy/ Code archive
 
         public void AddBacklog(Backlog backlog)
         {
@@ -24,9 +24,9 @@ namespace Domain.GeneralModels
         }
 
         public void CreateSprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster,
-            SprintType sprintType)
+            Pipeline pipeline, SprintType sprintType)
         {
-            var sprint = _sprintFactory.CreateSprint(title, startDate, endDate, scrumMaster, sprintType);
+            var sprint = _sprintFactory.CreateSprint(title, startDate, endDate, scrumMaster, pipeline, sprintType);
             Sprints.Add(sprint);
         }
     }

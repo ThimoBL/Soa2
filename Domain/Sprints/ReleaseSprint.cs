@@ -1,4 +1,5 @@
-﻿using Domain.Roles;
+﻿using Domain.Pipelines;
+using Domain.Roles;
 using Domain.Sprints.Visitor;
 
 namespace Domain.Sprints
@@ -6,8 +7,9 @@ namespace Domain.Sprints
     public class ReleaseSprint : Sprint
     {
         //ToDo: add pipeline to sprint
-        public ReleaseSprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster) : base(title,
-            startDate, endDate, scrumMaster)
+        public ReleaseSprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster,
+            Pipeline pipeline) : base(title,
+            startDate, endDate, scrumMaster, pipeline)
         {
         }
 

@@ -8,6 +8,6 @@ namespace Domain.Notifications.Interfaces
 {
     public interface IPublisher
     {
-        void Notify();
+        void SendNotification(string message);
     }
 }
