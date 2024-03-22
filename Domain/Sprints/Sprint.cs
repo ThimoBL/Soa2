@@ -1,14 +1,16 @@
 ﻿using Domain.Backlogs;
 using Domain.Pipelines;
+using Domain.Pipelines.Visitor;
 using Domain.Roles;
 using Domain.Sprints.States;
 using Domain.Sprints.Visitor;
+using System.Xml.Linq;
 
 namespace Domain.Sprints
 {
     public abstract class Sprint
     {
-        private Pipeline _pipeline;
+        private readonly Pipeline _pipeline;
         protected Sprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster, Pipeline pipeline)
         {
             Title = title;
@@ -34,5 +36,11 @@ namespace Domain.Sprints
 
         internal abstract void AcceptSprint(ISprintVisitor visitor);
         public abstract void NextSprintState();
+
+        public void RunPipeline()
+        {
+            Console.WriteLine($"=-=-=-= {_pipeline.Name} starting... =-=-=-=");
+            _pipeline.AcceptPipeline(new PipelineVisitor());
+        }
     }
 }

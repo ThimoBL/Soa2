@@ -43,6 +43,6 @@ pipeline.AddAction(sourceAction);
 pipeline.AddAction(packageAction);
 pipeline.AddAction(buildAction);
 
-pipeline.Run();
 var sprint = sprintFactory.CreateSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), scrumMaster, pipeline, SprintType.Release);
 sprint.NextSprintState();
+sprint.RunPipeline();

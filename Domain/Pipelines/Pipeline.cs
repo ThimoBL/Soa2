@@ -10,11 +10,5 @@ namespace Domain.Pipelines
     public class Pipeline(string name) : PipelineCompositeActions
     {
         public string Name { get; set; } = name;
-
-        public void Run()
-        {
-            Console.WriteLine($"=-=-=-= {Name} starting... =-=-=-=");
-            AcceptPipeline(new PipelineVisitor());
-        }
     }
 }
