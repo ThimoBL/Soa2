@@ -7,7 +7,5 @@ namespace Domain.Backlogs
     {
         public int StoryPoints { get; set; } = storyPoints;
         public IEnumerable<Task>? Tasks { get; set; } = new List<Task>();
-
-        //ToDo: Lijst van Threads toevoegen
     }
 }

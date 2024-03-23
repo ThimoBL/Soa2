@@ -7,9 +7,6 @@ namespace Domain.Sprints
 {
     internal class ReviewSprint : Sprint
     {
-        //ToDo: add reviews to sprint
-
-        //ToDo: add optional pipeline to sprint (maybe for review sprint but is an assumption)
         public ReviewSprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster,
             Pipeline pipeline) : base(title,
             startDate, endDate, scrumMaster, pipeline)
