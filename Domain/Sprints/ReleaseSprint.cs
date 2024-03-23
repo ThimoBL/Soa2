@@ -2,14 +2,16 @@
 using Domain.Pipelines.Visitor;
 using Domain.Roles;
 using Domain.Sprints.Visitor;
+using Domain.VersionControl;
+using Domain.VersionControl.Interfaces;
 
 namespace Domain.Sprints
 {
     public class ReleaseSprint : Sprint
     {
         public ReleaseSprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster,
-            Pipeline pipeline) : base(title,
-            startDate, endDate, scrumMaster, pipeline)
+            Pipeline pipeline, IGitStrategy gitStrategy) : base(title, startDate, endDate, scrumMaster, pipeline,
+            gitStrategy)
         {
         }
 

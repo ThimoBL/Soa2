@@ -18,7 +18,7 @@ namespace Domain.Backlogs
         public string Description { get; set; }
         public Developer Developer { get; set; }
         public ItemState Status { get; set; }
-        public Threads Thread { get; set; }
+        public Threads? Thread { get; set; }
         public void ChangeState(ItemState itemState)
         {
             Status = itemState;

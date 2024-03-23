@@ -5,12 +5,13 @@ using Domain.Roles;
 using Domain.Sprints.States;
 using Domain.Sprints.Visitor;
 using System.Xml.Linq;
+using Domain.VersionControl.Interfaces;
 
 namespace Domain.Sprints
 {
     public abstract class Sprint
     {
-        protected Sprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster, Pipeline pipeline)
+        protected Sprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster, Pipeline pipeline, IGitStrategy gitStrategy)
         {
             Title = title;
             StartDate = startDate;
@@ -19,6 +20,7 @@ namespace Domain.Sprints
             SprintState = new OpenState(this);
 
             Pipeline = pipeline;
+            GitStrategy = gitStrategy;
         }
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Title { get; set; }
@@ -28,6 +30,7 @@ namespace Domain.Sprints
         public ScrumMaster ScrumMaster { get; set; }
         public SprintState SprintState { get; set; }
         public Pipeline Pipeline { get; set; }
+        public IGitStrategy GitStrategy { get; set; }
 
         public void ChangeState(SprintState sprintState)
         {
@@ -41,7 +44,8 @@ namespace Domain.Sprints
 
         internal abstract void AcceptSprint(ISprintVisitor visitor);
         public abstract void NextSprintState();
-
         public abstract void RunPipeline();
+
+        public IList<BacklogItem> GetBacklogItems() => SprintBacklogItems;
     }
 }
