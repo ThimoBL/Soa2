@@ -1,4 +1,5 @@
 ﻿using Domain.Pipelines;
+using Domain.Pipelines.Visitor;
 using Domain.Roles;
 using Domain.Sprints.Visitor;
 
@@ -23,6 +24,11 @@ namespace Domain.Sprints
         public override void NextSprintState()
         {
             this.SprintState.NextState();
+        }
+
+        public override void RunPipeline()
+        {
+            throw new NotImplementedException();
         }
     }
 }

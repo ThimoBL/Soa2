@@ -1,13 +1,12 @@
-﻿using Domain.GeneralModels;
+﻿using Domain.Backlogs;
+using Domain.Forums;
+using Domain.GeneralModels;
 using Domain.Notifications;
 using Domain.Pipelines;
-using Domain.Pipelines.Actions.AnalyzeAction;
-using Domain.Pipelines.Actions.AnalyzeAction.SonarCube;
 using Domain.Pipelines.Actions.BuildAction;
 using Domain.Pipelines.Actions.PackageAction;
 using Domain.Pipelines.Actions.SourceAction;
 using Domain.Roles;
-using Domain.Sprints;
 using Domain.Sprints.Factory;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -43,6 +42,17 @@ pipeline.AddAction(sourceAction);
 pipeline.AddAction(packageAction);
 pipeline.AddAction(buildAction);
 
-var sprint = sprintFactory.CreateSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), scrumMaster, pipeline, SprintType.Release);
+var sprint = sprintFactory.CreateSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), scrumMaster, pipeline,
+    SprintType.Release);
 sprint.NextSprintState();
+
+var developer = new Developer("John Doe", "JohnDoe@email.nl", "password");
+var backlogItem = new BacklogItem("Backlog item 1", "Description", 1, developer);
+var thread = new Threads("Thread 1", "Description");
+var message = new Message("This is a backlog item message", developer);
+
+thread.AddMessage(message);
+backlogItem.AddThread(thread);
+sprint.AddBacklogItem(backlogItem);
+sprint.SprintBacklogItems.First().Thread.ReadAllMessages();
 sprint.RunPipeline();

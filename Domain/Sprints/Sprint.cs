@@ -10,7 +10,6 @@ namespace Domain.Sprints
 {
     public abstract class Sprint
     {
-        private readonly Pipeline _pipeline;
         protected Sprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster, Pipeline pipeline)
         {
             Title = title;
@@ -19,28 +18,30 @@ namespace Domain.Sprints
             ScrumMaster = scrumMaster;
             SprintState = new OpenState(this);
 
-            _pipeline = pipeline;
+            Pipeline = pipeline;
         }
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Title { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public Backlog SprintBacklog { get; set; } = new();
+        public IList<BacklogItem> SprintBacklogItems { get; set; } = new List<BacklogItem>();
         public ScrumMaster ScrumMaster { get; set; }
         public SprintState SprintState { get; set; }
+        public Pipeline Pipeline { get; set; }
 
         public void ChangeState(SprintState sprintState)
         {
             SprintState = sprintState;
         }
 
+        public void AddBacklogItem(BacklogItem backlogItem)
+        {
+            SprintBacklogItems.Add(backlogItem);
+        }
+
         internal abstract void AcceptSprint(ISprintVisitor visitor);
         public abstract void NextSprintState();
 
-        public void RunPipeline()
-        {
-            Console.WriteLine($"=-=-=-= {_pipeline.Name} starting... =-=-=-=");
-            _pipeline.AcceptPipeline(new PipelineVisitor());
-        }
+        public abstract void RunPipeline();
     }
 }

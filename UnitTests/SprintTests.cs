@@ -1,4 +1,5 @@
 ﻿using Domain.GeneralModels;
+using Domain.Pipelines;
 using Domain.Roles;
 using Domain.Sprints;
 using Domain.Sprints.Factory;
@@ -19,7 +20,8 @@ namespace UnitTests
         public void ReleaseSprint_Closed_After_FinishedState()
         {
             // Arrange
-            _project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), _scrumMaster, SprintType.Release);
+            _project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), _scrumMaster,
+                new Pipeline("Pipeline 1"), SprintType.Release);
             var releaseSprint = _project.Sprints.First();
             releaseSprint.ChangeState(new FinishedState(releaseSprint));
 
