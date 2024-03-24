@@ -29,6 +29,8 @@ namespace Domain.Backlogs
             Status = itemState;
         }
 
+        public void NextState() => Status.NextState();
+
         public void AddThread(Threads threads)
         {
             Thread = threads;

@@ -18,9 +18,6 @@ namespace Domain.Backlogs.States
             item.ChangeState(new DoingState(item));
         }
 
-        public override void PreviousState()
-        {
-            throw new NotImplementedException();
-        }
+        public override void PreviousState() => throw new NotImplementedException();
     }
 }

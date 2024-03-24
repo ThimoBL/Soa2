@@ -8,6 +8,11 @@ namespace Domain.Backlogs
     {
         //Navigation property
         public int StoryPoints { get; set; } = storyPoints;
-        public IEnumerable<Task>? Tasks { get; set; } = new List<Task>();
+        public IList<Task> Tasks { get; set; } = new List<Task>();
+
+        public void AddTask(Task task)
+        {
+            Tasks.Add(task);
+        }
     }
 }

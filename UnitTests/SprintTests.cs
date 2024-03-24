@@ -23,6 +23,42 @@ namespace UnitTests
     public class SprintTests
     {
         [Fact]
+        public void CreateSprint_With_ReviewType()
+        {
+            // Arrange
+            var pipeline = new Pipeline("Pipeline 1");
+            var project = new Project("Project Alpha", "This is a test project",
+                               Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(), new VersionControlFactory());
+
+            // Act
+            project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), Constants.ExampleScrumMaster,
+                               Constants.ExampleTester, pipeline, new GitStrategy(), SprintType.Review);
+
+            var reviewSprint = project.Sprints.First();
+
+            // Assert
+            Assert.Equal(typeof(ReviewSprint), reviewSprint.GetType());
+        }
+
+        [Fact]
+        public void CreateSprint_With_ReleaseType()
+        {
+            // Arrange
+            var pipeline = new Pipeline("Pipeline 1");
+            var project = new Project("Project Alpha", "This is a test project",
+                                              Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(), new VersionControlFactory());
+
+            // Act
+            project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), Constants.ExampleScrumMaster,
+                                              Constants.ExampleTester, pipeline, new GitStrategy(), SprintType.Release);
+
+            var releaseSprint = project.Sprints.First();
+
+            // Assert
+            Assert.Equal(typeof(ReleaseSprint), releaseSprint.GetType());
+        }
+
+        [Fact]
         public void ReleaseSprint_Closed_After_FinishedState()
         {
             // Arrange
