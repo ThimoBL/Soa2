@@ -3,9 +3,14 @@ using Domain.Forums;
 using Domain.GeneralModels;
 using Domain.Notifications;
 using Domain.Pipelines;
+using Domain.Pipelines.Actions.AnalyzeAction.SonarCube;
+using Domain.Pipelines.Actions.AnalyzeAction;
 using Domain.Pipelines.Actions.BuildAction;
+using Domain.Pipelines.Actions.DeployAction;
 using Domain.Pipelines.Actions.PackageAction;
 using Domain.Pipelines.Actions.SourceAction;
+using Domain.Pipelines.Actions.TestAction;
+using Domain.Pipelines.Actions.UtilityAction;
 using Domain.Roles;
 using Domain.Sprints.Factory;
 using Domain.Sprints.States;
@@ -39,20 +44,62 @@ productOwner.Notify();
 var pipeline = new Pipeline("Pipeline 1");
 
 // Add actions to pipeline
-var sourceAction = new SourceCompositeAction();
-sourceAction.AddAction(new SourceGithubAction());
+//Analyze action
+var compositeAnalyzeAction = new AnalyzeSonarCubeCompositeAction();
+var sonarCubePreparation = new SonarCubePreparationAction();
+var sonarCubeReporting = new SonarCubeReportingAction();
+var sonarCubeExecution = new SonarCubeExecutionAction();
 
-var packageAction = new PackageInstallAction();
+compositeAnalyzeAction.AddAction(sonarCubePreparation);
+compositeAnalyzeAction.AddAction(sonarCubeReporting);
+compositeAnalyzeAction.AddAction(sonarCubeExecution);
 
-var buildAction = new BuildCompositeAction();
-buildAction.AddAction(new BuildMavenAction());
+//Build action
+var compositeBuildAction = new BuildCompositeAction();
+var buildMavenAction = new BuildMavenAction();
+var buildDotNetAction = new BuildDotNetAction();
+var buildJenkinsAction = new BuildJenkinsAction();
+var buildAntAction = new BuildAntAction();
 
-pipeline.AddAction(sourceAction);
-pipeline.AddAction(packageAction);
-pipeline.AddAction(buildAction);
+compositeBuildAction.AddAction(buildMavenAction);
+compositeBuildAction.AddAction(buildDotNetAction);
+compositeBuildAction.AddAction(buildJenkinsAction);
+compositeBuildAction.AddAction(buildAntAction);
 
-var sprint = sprintFactory.CreateSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), 
-    scrumMaster, tester, pipeline, new GitStrategy(), project, SprintType.Review);
+//Deploy action
+var compositeDeployAction = new DeployCompositeAction();
+var deployAzureAction = new DeployAzureAction();
+var deployGithubAction = new DeployGithubAction();
+
+compositeDeployAction.AddAction(deployAzureAction);
+compositeDeployAction.AddAction(deployGithubAction);
+
+//Source action
+var compositeSourceAction = new SourceCompositeAction();
+var sourceGithubAction = new SourceGithubAction();
+var sourceAzureAction = new SourceAzureAction();
+
+compositeSourceAction.AddAction(sourceGithubAction);
+compositeSourceAction.AddAction(sourceAzureAction);
+
+//Test action
+var compositeTestAction = new TestCompositeAction();
+var testNUnitAction = new TestNUnitAction();
+var testSeleniumAction = new TestSeleniumAction();
+
+compositeTestAction.AddAction(testNUnitAction);
+compositeTestAction.AddAction(testSeleniumAction);
+
+pipeline.AddAction(compositeSourceAction);
+pipeline.AddAction(new PackageInstallAction());
+pipeline.AddAction(compositeBuildAction);
+pipeline.AddAction(compositeTestAction);
+pipeline.AddAction(compositeAnalyzeAction);
+pipeline.AddAction(compositeDeployAction);
+pipeline.AddAction(new UtilityAction());
+
+var sprint = sprintFactory.CreateSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14),
+    scrumMaster, tester, pipeline, new GitStrategy(), project, SprintType.Release);
 
 sprint.ChangeState(new FinishedState(sprint));
 sprint.NextSprintState();
@@ -68,4 +115,4 @@ var developer = new Developer("John Doe", "JohnDoe@email.nl", "password");
 // backlogItem.AddThread(thread);
 // sprint.AddBacklogItem(backlogItem);
 // sprint.GetBacklogItems().First().Thread.ReadAllMessages();
-// sprint.RunPipeline();
+sprint.RunPipeline();

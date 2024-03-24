@@ -9,6 +9,7 @@ using Domain.Pipelines.Actions.AnalyzeAction;
 using Domain.Pipelines.Actions.AnalyzeAction.SonarCube;
 using Domain.Pipelines.Actions.BuildAction;
 using Domain.Pipelines.Actions.DeployAction;
+using Domain.Pipelines.Actions.PackageAction;
 using Domain.Pipelines.Actions.SourceAction;
 using Domain.Pipelines.Actions.TestAction;
 using Domain.Pipelines.Visitor;
@@ -17,6 +18,7 @@ using Domain.VersionControl.Factory;
 using Domain.VersionControl;
 using Moq;
 using Domain.Sprints;
+using Domain.Pipelines.Actions.UtilityAction;
 
 namespace UnitTests
 {
@@ -64,60 +66,6 @@ namespace UnitTests
         {
             //Arrange
             var pipeline = new Pipeline("Pipeline 1");
-
-            //Analyze action
-            var compositeAnalyzeAction = new AnalyzeSonarCubeCompositeAction();
-            var sonarCubePreparation = new SonarCubePreparationAction();
-            var sonarCubeReporting = new SonarCubeReportingAction();
-            var sonarCubeExecution = new SonarCubeExecutionAction();
-
-            compositeAnalyzeAction.AddAction(sonarCubePreparation);
-            compositeAnalyzeAction.AddAction(sonarCubeReporting);
-            compositeAnalyzeAction.AddAction(sonarCubeExecution);
-
-            //Build action
-            var compositeBuildAction = new BuildCompositeAction();
-            var buildMavenAction = new BuildMavenAction();
-            var buildDotNetAction = new BuildDotNetAction();
-            var buildJenkinsAction = new BuildJenkinsAction();
-            var buildAntAction = new BuildAntAction();
-
-            compositeBuildAction.AddAction(buildMavenAction);
-            compositeBuildAction.AddAction(buildDotNetAction);
-            compositeBuildAction.AddAction(buildJenkinsAction);
-            compositeBuildAction.AddAction(buildAntAction);
-
-            //Deploy action
-            var compositeDeployAction = new DeployCompositeAction();
-            var deployAzureAction = new DeployAzureAction();
-            var deployGithubAction = new DeployGithubAction();
-
-            compositeDeployAction.AddAction(deployAzureAction);
-            compositeDeployAction.AddAction(deployGithubAction);
-
-            //Source action
-            var compositeSourceAction = new SourceCompositeAction();
-            var sourceGithubAction = new SourceGithubAction();
-            var sourceAzureAction = new SourceAzureAction();
-
-            compositeSourceAction.AddAction(sourceGithubAction);
-            compositeSourceAction.AddAction(sourceAzureAction);
-
-            //Test action
-            var compositeTestAction = new TestCompositeAction();
-            var testNUnitAction = new TestNUnitAction();
-            var testSeleniumAction = new TestSeleniumAction();
-
-            compositeTestAction.AddAction(testNUnitAction);
-            compositeTestAction.AddAction(testSeleniumAction);
-
-            pipeline.AddAction(compositeSourceAction);
-            pipeline.AddAction(Constants.PackageAction);
-            pipeline.AddAction(compositeBuildAction);
-            pipeline.AddAction(compositeTestAction);
-            pipeline.AddAction(compositeAnalyzeAction);
-            pipeline.AddAction(compositeDeployAction);
-            pipeline.AddAction(Constants.UtilityAction);
 
             var project = new Project("Project Alpha", "This is a test project",
                 Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(),
