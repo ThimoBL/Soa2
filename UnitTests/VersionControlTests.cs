@@ -15,25 +15,21 @@ namespace UnitTests
         public void User_Can_Use_VersionControl()
         {
             //Arrange
-            var versionControl = new Mock<IVersionControlFactory>();
-
-            versionControl.Setup(x => x.CreateGitStrategy(VersionControlTypes.Git));
+            var versionControl = new VersionControlFactory();
 
             //Act
-            versionControl.Object.CreateGitStrategy(VersionControlTypes.Git);
+            var gitStrategy = versionControl.CreateGitStrategy(VersionControlTypes.Git);
 
             //Assert
-            versionControl.Verify(x => x.CreateGitStrategy(VersionControlTypes.Git), Times.Once);
+            Assert.IsType<GitStrategy>(gitStrategy);
         }
 
         [Fact]
         public void User_Can_Commit_Using_VersionControl()
         {
             //Arrange
-            var versionControl = new Mock<IVersionControlFactory>();
-            versionControl.Setup(x => x.CreateGitStrategy(VersionControlTypes.Git))
-                .Returns(new GitStrategy());
-            var git = versionControl.Object.CreateGitStrategy(VersionControlTypes.Git);
+            var versionControl = new VersionControlFactory();
+            var git = versionControl.CreateGitStrategy(VersionControlTypes.Git);
 
             git.Branch("Dev");
             git.Checkout("Dev");
