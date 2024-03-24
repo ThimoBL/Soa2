@@ -61,10 +61,10 @@ versionControl.Commit("Commit message");
 
 var developer = new Developer("John Doe", "JohnDoe@email.nl", "password");
 // var backlogItem = new BacklogItem("Backlog item 1", "Description", 1, developer);
-var thread = new Threads("Thread 1", "Description");
-var message = new Message("This is a backlog item message", developer);
+// var thread = new Threads("Thread 1", "Description", sprint);
+// var message = new Message("This is a backlog item message", developer);
 
-thread.AddMessage(message);
+// thread.AddMessage(message);
 // backlogItem.AddThread(thread);
 // sprint.AddBacklogItem(backlogItem);
 // sprint.GetBacklogItems().First().Thread.ReadAllMessages();

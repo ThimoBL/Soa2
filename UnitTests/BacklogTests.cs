@@ -24,7 +24,7 @@ namespace UnitTests
 
             var backlogItem =
                 new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, releaseSprint);
-            var thread = new Threads("ExampleTitle", "ExampleDescription");
+            var thread = new Threads("ExampleTitle", "ExampleDescription", backlogItem);
             var message = new Message("ExampleMessage", Constants.ExampleDeveloper);
 
             releaseSprint.AddBacklogItem(backlogItem);

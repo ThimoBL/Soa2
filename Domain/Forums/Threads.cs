@@ -7,10 +7,11 @@ using Domain.Backlogs;
 
 namespace Domain.Forums
 {
-    public class Threads(string title, string description)
+    public class Threads(string title, string description, Item backlogItem)
     {
         public string Title { get; set; } = title;
         public string Description { get; set; } = description;
+        public Item BacklogItem { get; set; } = backlogItem;
         public IList<Message> Messages { get; set; } = new List<Message>();
 
         public void AddMessage(Message message)

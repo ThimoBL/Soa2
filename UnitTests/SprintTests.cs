@@ -46,6 +46,9 @@ namespace UnitTests
             mockPipeline.Object.AddAction(Constants.PackageAction);
             mockPipeline.Object.AddAction(Constants.BuildAction);
             mockPipeline.Object.AddAction(Constants.TestAction);
+            mockPipeline.Object.AddAction(Constants.AnalyzeAction);
+            mockPipeline.Object.AddAction(Constants.DeployAction);
+            mockPipeline.Object.AddAction(Constants.UtilityAction);
 
             Constants.ProjectExample.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), Constants.ExampleScrumMaster,
                 tester, mockPipeline.Object, new GitStrategy(), SprintType.Release);

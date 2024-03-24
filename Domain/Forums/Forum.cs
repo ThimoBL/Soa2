@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Forums
 {
-    public class Forum(IList<Threads> threads)
+    public class Forum()
     {
-        public IList<Threads> Threads { get; set; } = threads;
+        public IList<Threads> Threads { get; set; } = new List<Threads>();
 
         public List<Threads> GetAllThreads() => Threads.ToList();
 
