@@ -41,15 +41,16 @@ namespace Domain.VersionControl
             Console.WriteLine("Branch does not exist");
         }
 
-        public void Pull()
+        public string Pull()
         {
-            if (_repository.ContainsKey(_currentBranch))
+            if (_repository.TryGetValue(_currentBranch, out var result))
             {
                 Console.WriteLine("Pulling changes from remote repository");
-                return;
+                return result.Last();
             }
 
             Console.WriteLine("Branch does not exist");
+            throw new InvalidOperationException("Branch does not exist");
         }
 
         public void Branch(string branch)
@@ -65,9 +66,10 @@ namespace Domain.VersionControl
 
         public void Merge(string branch)
         {
-            if (_repository.TryGetValue(_currentBranch, out var commits))
+            if (_repository.TryGetValue(branch, out var commits))
             {
-                commits.AddRange(_repository[branch]);
+                _repository[_currentBranch].AddRange(commits);
+                _repository.Remove(branch);
                 Console.WriteLine("Branch merged successfully");
                 return;
             }
@@ -86,5 +88,10 @@ namespace Domain.VersionControl
             _currentBranch = branch;
             Console.WriteLine($"Switched to branch: {branch}");
         }
+
+        public Dictionary<string, List<string>> GetRepository() => _repository;
+        public List<string> GetCommits(string branch) => _repository[branch];
+        public List<string> GetBranches() => _repository.Keys.ToList();
+        public string GetCurrentBranch() => _currentBranch;
     }
 }

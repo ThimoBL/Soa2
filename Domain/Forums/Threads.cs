@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Backlogs;
+using Domain.Backlogs.States;
 
 namespace Domain.Forums
 {
@@ -16,6 +17,9 @@ namespace Domain.Forums
 
         public void AddMessage(Message message)
         {
+            if (BacklogItem.Status.GetType() == typeof(DoneState))
+                throw new InvalidOperationException("Cannot add messages to a done item.");
+
             Messages.Add(message);
         }
 

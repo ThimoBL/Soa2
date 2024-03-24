@@ -5,8 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Backlogs;
 using Domain.Forums;
+using Domain.GeneralModels;
+using Domain.Pipelines;
 using Domain.Sprints.Factory;
 using Domain.VersionControl;
+using Domain.VersionControl.Factory;
 
 namespace UnitTests
 {
@@ -16,11 +19,15 @@ namespace UnitTests
         public void Backlog_Item_Can_Have_Message()
         {
             //Arrange
-            Constants.ProjectExample.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7),
-                Constants.ExampleScrumMaster, Constants.ExampleTester, Constants.PipelineExample, new GitStrategy(),
+            var pipeline = new Pipeline("Pipeline 1");
+            var project = new Project("Project Alpha", "This is a test project",
+                Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(), new VersionControlFactory());
+
+            project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7),
+                Constants.ExampleScrumMaster, Constants.ExampleTester, pipeline, new GitStrategy(),
                 SprintType.Release);
 
-            var releaseSprint = Constants.ProjectExample.Sprints.First();
+            var releaseSprint = project.Sprints.First();
 
             var backlogItem =
                 new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, releaseSprint);

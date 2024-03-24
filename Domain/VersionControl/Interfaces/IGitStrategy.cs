@@ -10,9 +10,13 @@ namespace Domain.VersionControl.Interfaces
     {
         void Commit(string message);
         void Push();
-        void Pull();
+        string Pull();
         void Branch(string branch);
         void Merge(string branch);
         void Checkout(string branch);
+        Dictionary<string, List<string>> GetRepository();
+        List<string> GetBranches();
+        List<string> GetCommits(string branch);
+        string GetCurrentBranch();
     }
 }

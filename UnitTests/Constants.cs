@@ -25,13 +25,6 @@ namespace UnitTests
         public static readonly Developer ExampleDeveloper = new("Developer", "Email", "Password");
         public static readonly Tester ExampleTester = new("Tester", "Email", "Password");
 
-        //Project
-        public static readonly Project ProjectExample = new("Project Alpha", "This is a test project",
-            ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(), new VersionControlFactory());
-
-        //Pipeline
-        public static readonly Pipeline PipelineExample = new("Pipeline Alpha");
-
         //Pipeline Actions
         public static readonly SourceGithubAction SourceAction = new();
         public static readonly PackageInstallAction PackageAction = new();
