@@ -33,12 +33,12 @@ namespace Domain.Sprints.States
 
             if (_sprint.GetType() == typeof(ReviewSprint) && _sprint.IsReviewUploaded())
             {
-                _sprint.ChangeState(new ClosedState(_sprint));
+                _sprint.ChangeState(new ReviewState(_sprint));
             }
 
             if (_sprint.GetType() == typeof(ReleaseSprint))
             {
-                _sprint.ChangeState(new ClosedState(_sprint));
+                _sprint.ChangeState(new ReleaseState(_sprint));
             }
         }
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Pipelines.Actions.TestAction
 {
-    public class TestCompositeAction : PipelineActions
+    public class TestCompositeAction : PipelineCompositeActions
     {
         public override void AcceptPipeline(IPipelineVisitor visitor)
         {

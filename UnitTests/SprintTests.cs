@@ -35,6 +35,7 @@ namespace UnitTests
 
             // Act
             releaseSprint.NextSprintState();
+            releaseSprint.NextSprintState();
 
             // Assert
             Assert.IsType<ClosedState>(releaseSprint.SprintState);
@@ -65,7 +66,11 @@ namespace UnitTests
             var releaseSprint = project.Sprints.First();
 
             //Act
-            releaseSprint.ChangeState(new FinishedState(releaseSprint));
+            releaseSprint.NextSprintState(); // PlanningState
+            releaseSprint.NextSprintState(); // ActiveState
+            releaseSprint.NextSprintState(); // FinishedState
+            releaseSprint.NextSprintState(); // ReleaseState
+            releaseSprint.NextSprintState(); // ClosedState
 
             //Assert
             mockPipeline.Verify(p => p.AcceptPipeline(It.IsAny<PipelineVisitor>()), Times.Once);
