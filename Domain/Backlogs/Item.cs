@@ -34,6 +34,10 @@ namespace Domain.Backlogs
 
         public void ChangeState(ItemState itemState)
         {
+            if (Status.GetType() == typeof(TestingState) && itemState.GetType() == typeof(ToDoState))
+            {
+                GetSprint().NotifyScrumMaster("Item is back to ToDo state");
+            }
             Status = itemState;
         }
 

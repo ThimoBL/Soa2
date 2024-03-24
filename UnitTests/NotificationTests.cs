@@ -38,14 +38,44 @@ namespace UnitTests
 
             var sprint = project.Sprints.First();
 
-            var backlogItem = new Mock<BacklogItem>("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper,
+            var backlogItem = new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper,
                 sprint, new NotificationService());
 
             //Act
-            backlogItem.Object.ChangeState(new ReadyForTestingState(backlogItem.Object));
+            backlogItem.ChangeState(new ReadyForTestingState(backlogItem));
 
             //Assert
             mockTester.Verify(x => x.Notify(), Times.AtLeastOnce);
+        }
+
+        [Fact]
+        public void Notify_ScrumMaster_When_BacklogItem_Is_From_Testing_To_Todo()
+        {
+            //Arrange
+            var mockScrumMaster = new Mock<ScrumMaster>("ScrumMaster", "scrumMaster@email.nl", "password");
+            var pipeline = new Pipeline("Pipeline 1");
+            mockScrumMaster.Object.AddPreferences(new MailPublisher());
+            mockScrumMaster.Object.AddPreferences(new SlackPublisher());
+
+            var project = new Project("Project Alpha", "This is a test project",
+                               Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(),
+                                              new VersionControlFactory());
+
+            project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), mockScrumMaster.Object,
+                               Constants.ExampleTester, pipeline, new GitStrategy(), SprintType.Release, new NotificationService());
+
+            var sprint = project.Sprints.First();
+
+            var backlogItem = new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper,
+                               sprint, new NotificationService());
+
+            backlogItem.ChangeState(new TestingState(backlogItem));
+
+            //Act
+            backlogItem.ChangeState(new ToDoState(backlogItem));
+
+            //Assert
+            mockScrumMaster.Verify(x => x.Notify(), Times.AtLeastOnce);
         }
     }
 }
