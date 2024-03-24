@@ -140,7 +140,7 @@ namespace UnitTests
         public void Can_Run_Pipeline_With_Full_Actions()
         {
             //Arrange
-            var mockPipeline = new Mock<Pipeline>("Pipeline 1");
+            var pipeline = new Pipeline("Pipeline 1");
             var visitor = new Mock<IPipelineVisitor>();
 
             //Analyze action
@@ -189,13 +189,13 @@ namespace UnitTests
             compositeTestAction.AddAction(testNUnitAction);
             compositeTestAction.AddAction(testSeleniumAction);
 
-            mockPipeline.Object.AddAction(compositeSourceAction);
-            mockPipeline.Object.AddAction(new PackageInstallAction());
-            mockPipeline.Object.AddAction(compositeBuildAction);
-            mockPipeline.Object.AddAction(compositeTestAction);
-            mockPipeline.Object.AddAction(compositeAnalyzeAction);
-            mockPipeline.Object.AddAction(compositeDeployAction);
-            mockPipeline.Object.AddAction(new UtilityAction());
+            pipeline.AddAction(compositeSourceAction);
+            pipeline.AddAction(new PackageInstallAction());
+            pipeline.AddAction(compositeBuildAction);
+            pipeline.AddAction(compositeTestAction);
+            pipeline.AddAction(compositeAnalyzeAction);
+            pipeline.AddAction(compositeDeployAction);
+            pipeline.AddAction(new UtilityAction());
 
             //Act
             visitor.Object.Visit(compositeSourceAction);
