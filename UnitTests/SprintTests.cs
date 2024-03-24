@@ -128,5 +128,23 @@ namespace UnitTests
             //Assert
             Assert.True(reviewSprint.IsReviewUploaded());
         }
+
+        [Fact]
+        public void Cant_Review_Release_Sprint()
+        {
+            //Arrange
+            var tester = new Tester("John Doe", "Johndoe@email.com", "password");
+            var pipeline = new Pipeline("Pipeline 1");
+            var project = new Project("Project Alpha", "This is a test project",
+                Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(), new VersionControlFactory());
+
+            project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), Constants.ExampleScrumMaster,
+                tester, pipeline, new GitStrategy(), SprintType.Release);
+
+            var reviewSprint = project.Sprints.First();
+
+            //Act & Assert
+            Assert.Throws<InvalidOperationException>(() => reviewSprint.UploadReview());
+        }
     }
 }

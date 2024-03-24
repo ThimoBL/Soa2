@@ -53,10 +53,7 @@ namespace Domain.Sprints
         public abstract void NextSprintState();
         public abstract void RunPipeline();
 
-        public virtual void UploadReview()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void UploadReview();
 
         public virtual bool IsReviewUploaded() => false;
 

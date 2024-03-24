@@ -27,5 +27,10 @@ namespace Domain.Sprints
             Console.WriteLine($"=-=-=-= {Pipeline.Name} starting... =-=-=-=");
             Pipeline.AcceptPipeline(new PipelineVisitor());
         }
+
+        public override void UploadReview()
+        {
+            throw new InvalidOperationException("Release sprint does not have a review");
+        }
     }
 }
