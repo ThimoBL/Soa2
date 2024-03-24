@@ -9,11 +9,14 @@ namespace Domain.Sprints
 {
     public class ReviewSprint : Sprint
     {
+        private bool ReviewUploaded { get; set; }
+
         public ReviewSprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster, Tester tester,
             Pipeline pipeline, IGitStrategy gitStrategy, Project project) : base(title, startDate, endDate, scrumMaster,
             tester, pipeline, gitStrategy, project)
         {
         }
+
 
         internal override void AcceptSprint(ISprintVisitor visitor)
         {
@@ -29,5 +32,13 @@ namespace Domain.Sprints
         {
             throw new NotImplementedException();
         }
+
+        public override void UploadReview()
+        {
+            ReviewUploaded = true;
+            Console.WriteLine("Review uploaded");
+        }
+
+        public override bool IsReviewUploaded() => ReviewUploaded;
     }
 }

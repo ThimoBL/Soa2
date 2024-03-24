@@ -14,7 +14,11 @@ namespace Domain.Sprints.States
         public FinishedState(Sprint sprint)
         {
             _sprint = sprint;
-            _sprint.RunPipeline();
+
+            if (sprint.GetType() == typeof(ReleaseSprint))
+            {
+                _sprint.RunPipeline();
+            }
         }
 
         public override void SetState()
@@ -26,6 +30,11 @@ namespace Domain.Sprints.States
         {
             var visitor = new SprintVisitor(_sprint);
             _sprint.AcceptSprint(visitor);
+
+            if (_sprint.GetType() == typeof(ReviewSprint) && _sprint.IsReviewUploaded())
+            {
+                _sprint.ChangeState(new ClosedState(_sprint));
+            }
         }
     }
 }

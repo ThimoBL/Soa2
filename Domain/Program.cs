@@ -8,6 +8,7 @@ using Domain.Pipelines.Actions.PackageAction;
 using Domain.Pipelines.Actions.SourceAction;
 using Domain.Roles;
 using Domain.Sprints.Factory;
+using Domain.Sprints.States;
 using Domain.VersionControl;
 using Domain.VersionControl.Factory;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +27,7 @@ var productOwner = new ProductOwner("Name", "Email", "Password");
 var project = new Project("Project Alpha", "This is a test project", productOwner, VersionControlTypes.Git,
     sprintFactory, versionControlFactory);
 var scrumMaster = new ScrumMaster("John Doe", "JohnDoe@email.nl", "password");
+var tester = new Tester("John Doe", "JohnDoe@email.nl", "password");
 
 var versionControl = project.GetGitStrategy();
 
@@ -49,9 +51,11 @@ pipeline.AddAction(sourceAction);
 pipeline.AddAction(packageAction);
 pipeline.AddAction(buildAction);
 
-// var sprint = sprintFactory.CreateSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), scrumMaster, pipeline,
-//     SprintType.Release, new GitStrategy());
-// sprint.NextSprintState();
+var sprint = sprintFactory.CreateSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14), 
+    scrumMaster, tester, pipeline, new GitStrategy(), project, SprintType.Review);
+
+sprint.ChangeState(new FinishedState(sprint));
+sprint.NextSprintState();
 
 versionControl.Commit("Commit message");
 

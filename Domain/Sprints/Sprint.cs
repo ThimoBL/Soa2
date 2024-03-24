@@ -53,6 +53,13 @@ namespace Domain.Sprints
         public abstract void NextSprintState();
         public abstract void RunPipeline();
 
+        public virtual void UploadReview()
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual bool IsReviewUploaded() => false;
+
         public IList<BacklogItem> GetBacklogItems() => SprintBacklogItems;
     }
 }

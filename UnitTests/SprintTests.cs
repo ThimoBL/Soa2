@@ -12,17 +12,12 @@ using Domain.Sprints.States;
 using Domain.VersionControl;
 using Domain.VersionControl.Factory;
 using Moq;
+using System.Diagnostics.Metrics;
 
 namespace UnitTests
 {
     public class SprintTests
     {
-        private readonly Project _project = new("Project Alpha", "This is a test project",
-            new ProductOwner("Name", "Email", "Password"), VersionControlTypes.Git, new SprintFactory(),
-            new VersionControlFactory());
-        private readonly ScrumMaster _scrumMaster = new("John Doe", "Johndoe@email.nl", "password");
-
-
         [Fact]
         public void ReleaseSprint_Closed_After_FinishedState()
         {
@@ -46,26 +41,41 @@ namespace UnitTests
             var tester = new Tester("John Doe", "Johndoe@email.com", "password");
 
             var mockPipeline = new Mock<Pipeline>("Pipeline 1");
-            var sourceAction = new SourceGithubAction();
-            var packageAction = new PackageInstallAction();
-            var buildAction = new BuildMavenAction();
-            var testAction = new TestNUnitAction();
 
-            mockPipeline.Object.AddAction(sourceAction);
-            mockPipeline.Object.AddAction(packageAction);
-            mockPipeline.Object.AddAction(buildAction);
-            mockPipeline.Object.AddAction(testAction);
+            mockPipeline.Object.AddAction(Constants.SourceAction);
+            mockPipeline.Object.AddAction(Constants.PackageAction);
+            mockPipeline.Object.AddAction(Constants.BuildAction);
+            mockPipeline.Object.AddAction(Constants.TestAction);
 
-            _project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), _scrumMaster,
+            Constants.ProjectExample.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), Constants.ExampleScrumMaster,
                 tester, mockPipeline.Object, new GitStrategy(), SprintType.Release);
 
-            var releaseSprint = _project.Sprints.First();
+            var releaseSprint = Constants.ProjectExample.Sprints.First();
 
             //Act
             releaseSprint.ChangeState(new FinishedState(releaseSprint));
 
             //Assert
             mockPipeline.Verify(p => p.AcceptPipeline(It.IsAny<PipelineVisitor>()), Times.Once);
+        }
+
+        [Fact]
+        public void ReviewSprint_Needs_Extra_Action()
+        {
+            //Arrange
+            var tester = new Tester("John Doe", "Johndoe@email.com", "password");
+            var pipeline = new Pipeline("Pipeline 1");
+
+            Constants.ProjectExample.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), Constants.ExampleScrumMaster,
+                tester, pipeline, new GitStrategy(), SprintType.Review);
+
+            var reviewSprint = Constants.ProjectExample.Sprints.First();
+
+            //Act
+            reviewSprint.UploadReview();
+
+            //Assert
+            Assert.True(reviewSprint.IsReviewUploaded());
         }
     }
 }

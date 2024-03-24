@@ -10,7 +10,7 @@ namespace UnitTests
     public class ProjectTests
     {
         [Fact]
-        public void ProjectCanBeCreated()
+        public void Project_Should_Be_Created_By_ProductOwner()
         {
             //Arrange
             string expectedTitle = "Project Alpha";
@@ -23,6 +23,9 @@ namespace UnitTests
 
             //Assert
             Assert.NotNull(project);
+            Assert.Equal(expectedTitle, project.Title);
+            Assert.Equal(expectedDescription, project.Description);
+            Assert.Equal(expectedOwner, project.Owner);
         }
     }
 }
