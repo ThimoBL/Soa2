@@ -7,17 +7,25 @@ using Domain.Sprints.Visitor;
 
 namespace Domain.Sprints.States
 {
-    public class FinishedState(Sprint sprint) : SprintState
+    public class FinishedState : SprintState
     {
+        private readonly Sprint _sprint;
+
+        public FinishedState(Sprint sprint)
+        {
+            _sprint = sprint;
+            _sprint.RunPipeline();
+        }
+
         public override void SetState()
         {
-            sprint.ChangeState(new FinishedState(sprint));
+            _sprint.ChangeState(new FinishedState(_sprint));
         }
 
         public override void NextState()
         {
-            var visitor = new SprintVisitor(sprint);
-            sprint.AcceptSprint(visitor);
+            var visitor = new SprintVisitor(_sprint);
+            _sprint.AcceptSprint(visitor);
         }
     }
 }

@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace Domain.Backlogs.States
 {
-    public class ReadyForTestingState(Item item) : ItemState(item)
+    public class ReadyForTestingState : ItemState
     {
+        public ReadyForTestingState(Item item) : base(item)
+        {
+        }
+
         public override void SetState()
         {
             item.ChangeState(new ReadyForTestingState(item));

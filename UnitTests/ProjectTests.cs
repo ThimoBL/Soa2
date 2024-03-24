@@ -2,6 +2,7 @@ using Domain;
 using Domain.GeneralModels;
 using Domain.Roles;
 using Domain.Sprints.Factory;
+using Domain.VersionControl.Factory;
 using Moq;
 
 namespace UnitTests
@@ -17,7 +18,8 @@ namespace UnitTests
             var expectedOwner = new ProductOwner("Name", "Email", "Password");
 
             //Act
-            var project = new Project(expectedTitle, expectedDescription, expectedOwner, new SprintFactory());
+            var project = new Project(expectedTitle, expectedDescription, expectedOwner, VersionControlTypes.Git,
+                new SprintFactory(), new VersionControlFactory());
 
             //Assert
             Assert.NotNull(project);

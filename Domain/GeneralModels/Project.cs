@@ -1,5 +1,6 @@
 ﻿using Domain.Backlogs;
 using Domain.Pipelines;
+using Domain.Pipelines.Visitor;
 using Domain.Roles;
 using Domain.Sprints;
 using Domain.Sprints.Factory;
@@ -9,7 +10,8 @@ using Domain.VersionControl.Interfaces;
 
 namespace Domain.GeneralModels
 {
-    public class Project(string title, string description, ProductOwner owner, VersionControlTypes gitType, ISprintFactory sprintFactory,
+    public class Project(string title, string description, ProductOwner owner, VersionControlTypes gitType,
+        ISprintFactory sprintFactory,
         IVersionControlFactory versionControlFactory)
     {
         private IGitStrategy GitStrategy { get; set; } = versionControlFactory.CreateGitStrategy(gitType);
@@ -28,9 +30,10 @@ namespace Domain.GeneralModels
         public IGitStrategy GetGitStrategy() => GitStrategy;
 
         public void CreateSprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster,
-            Pipeline pipeline, SprintType sprintType, IGitStrategy gitStrategy)
+            Tester tester, Pipeline pipeline, IGitStrategy gitStrategy, SprintType sprintType)
         {
-            var sprint = sprintFactory.CreateSprint(title, startDate, endDate, scrumMaster, pipeline, sprintType, gitStrategy);
+            var sprint = sprintFactory.CreateSprint(title, startDate, endDate, scrumMaster, tester, pipeline,
+                gitStrategy, this, sprintType);
             Sprints.Add(sprint);
         }
     }

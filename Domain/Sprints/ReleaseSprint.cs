@@ -1,4 +1,5 @@
-﻿using Domain.Pipelines;
+﻿using Domain.GeneralModels;
+using Domain.Pipelines;
 using Domain.Pipelines.Visitor;
 using Domain.Roles;
 using Domain.Sprints.Visitor;
@@ -7,14 +8,10 @@ using Domain.VersionControl.Interfaces;
 
 namespace Domain.Sprints
 {
-    public class ReleaseSprint : Sprint
+    public class ReleaseSprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster,
+            Tester tester, Pipeline pipeline, IGitStrategy gitStrategy, Project project)
+        : Sprint(title, startDate, endDate, scrumMaster, tester, pipeline, gitStrategy, project)
     {
-        public ReleaseSprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster,
-            Pipeline pipeline, IGitStrategy gitStrategy) : base(title, startDate, endDate, scrumMaster, pipeline,
-            gitStrategy)
-        {
-        }
-
         internal override void AcceptSprint(ISprintVisitor visitor)
         {
             visitor.VisitRelease(this);
