@@ -10,17 +10,17 @@ namespace Domain.Backlogs.States
     {
         public override void SetState()
         {
-            throw new NotImplementedException();
+            item.ChangeState(new TestingState(item));
         }
 
         public override void NextState()
         {
-            throw new NotImplementedException();
+            item.ChangeState(new TestedState(item));
         }
 
         public override void PreviousState()
         {
-            throw new NotImplementedException();
+            item.ChangeState(new ReadyForTestingState(item));
         }
     }
 }
