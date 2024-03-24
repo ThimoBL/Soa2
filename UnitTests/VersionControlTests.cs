@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.GeneralModels;
+using Domain.Sprints.Factory;
 using Domain.VersionControl;
 using Domain.VersionControl.Factory;
 using Moq;
@@ -15,21 +17,26 @@ namespace UnitTests
         public void User_Can_Use_VersionControl()
         {
             //Arrange
-            var versionControl = new VersionControlFactory();
+            var project = new Project("Project Alpha", "This is a test project",
+                Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(),
+                new VersionControlFactory());
 
             //Act
-            var gitStrategy = versionControl.CreateGitStrategy(VersionControlTypes.Git);
+            var versionControl = project.GetGitStrategy();
+
 
             //Assert
-            Assert.IsType<GitStrategy>(gitStrategy);
+            Assert.IsType<GitStrategy>(versionControl);
         }
 
         [Fact]
         public void User_Can_Commit_Using_VersionControl()
         {
             //Arrange
-            var versionControl = new VersionControlFactory();
-            var git = versionControl.CreateGitStrategy(VersionControlTypes.Git);
+            var project = new Project("Project Alpha", "This is a test project",
+                Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(),
+                new VersionControlFactory());
+            var git = project.GetGitStrategy();
 
             git.Branch("Dev");
             git.Checkout("Dev");
