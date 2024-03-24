@@ -35,6 +35,11 @@ namespace Domain.Sprints.States
             {
                 _sprint.ChangeState(new ClosedState(_sprint));
             }
+
+            if (_sprint.GetType() == typeof(ReleaseSprint))
+            {
+                _sprint.ChangeState(new ClosedState(_sprint));
+            }
         }
     }
 }

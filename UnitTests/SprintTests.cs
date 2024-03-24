@@ -22,16 +22,22 @@ namespace UnitTests
         public void ReleaseSprint_Closed_After_FinishedState()
         {
             // Arrange
-            // _project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), _scrumMaster,
-                // new Pipeline("Pipeline 1"), SprintType.Release, new GitStrategy());
-            // var releaseSprint = _project.Sprints.First();
-            // releaseSprint.ChangeState(new FinishedState(releaseSprint));
+            var pipeline = new Pipeline("Pipeline 1");
+            var project = new Project("Project Alpha", "This is a test project",
+                Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(), new VersionControlFactory());
+
+            project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), Constants.ExampleScrumMaster,
+                Constants.ExampleTester, pipeline, new GitStrategy(), SprintType.Release);
+
+            var releaseSprint = project.Sprints.First();
+
+            releaseSprint.ChangeState(new FinishedState(releaseSprint));
 
             // Act
-            // releaseSprint.NextSprintState();
+            releaseSprint.NextSprintState();
 
             // Assert
-            // Assert.IsType<ClosedState>(releaseSprint.SprintState);
+            Assert.IsType<ClosedState>(releaseSprint.SprintState);
         }
 
         [Fact]
