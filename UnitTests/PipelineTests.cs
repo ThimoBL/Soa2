@@ -63,7 +63,7 @@ namespace UnitTests
         public void Run_Pipeline_Manually_From_Sprint()
         {
             //Arrange
-            var mockPipeline = new Mock<Pipeline>("Pipeline 1");
+            var pipeline = new Pipeline("Pipeline 1");
 
             //Analyze action
             var compositeAnalyzeAction = new AnalyzeSonarCubeCompositeAction();
@@ -111,20 +111,20 @@ namespace UnitTests
             compositeTestAction.AddAction(testNUnitAction);
             compositeTestAction.AddAction(testSeleniumAction);
 
-            mockPipeline.Object.AddAction(compositeSourceAction);
-            mockPipeline.Object.AddAction(Constants.PackageAction);
-            mockPipeline.Object.AddAction(compositeBuildAction);
-            mockPipeline.Object.AddAction(compositeTestAction);
-            mockPipeline.Object.AddAction(compositeAnalyzeAction);
-            mockPipeline.Object.AddAction(compositeDeployAction);
-            mockPipeline.Object.AddAction(Constants.UtilityAction);
+            pipeline.AddAction(compositeSourceAction);
+            pipeline.AddAction(Constants.PackageAction);
+            pipeline.AddAction(compositeBuildAction);
+            pipeline.AddAction(compositeTestAction);
+            pipeline.AddAction(compositeAnalyzeAction);
+            pipeline.AddAction(compositeDeployAction);
+            pipeline.AddAction(Constants.UtilityAction);
 
             var project = new Project("Project Alpha", "This is a test project",
                 Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(),
                 new VersionControlFactory());
 
             var mockSprint = new Mock<ReleaseSprint>("Sprint 1", DateTime.Now, DateTime.Now.AddDays(7),
-                Constants.ExampleScrumMaster, Constants.ExampleTester, mockPipeline.Object, new GitStrategy(),
+                Constants.ExampleScrumMaster, Constants.ExampleTester, pipeline, new GitStrategy(),
                 project);
 
             //Act
