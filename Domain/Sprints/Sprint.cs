@@ -6,6 +6,8 @@ using Domain.Sprints.States;
 using Domain.Sprints.Visitor;
 using System.Xml.Linq;
 using Domain.GeneralModels;
+using Domain.Notifications;
+using Domain.Notifications.Interfaces;
 using Domain.VersionControl.Interfaces;
 
 namespace Domain.Sprints
@@ -13,7 +15,8 @@ namespace Domain.Sprints
     public abstract class Sprint
     {
         private readonly Project _project;
-        protected Sprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster, Tester tester, Pipeline pipeline, IGitStrategy gitStrategy, Project project)
+        private readonly INotificationService _notificationService;
+        protected Sprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster, Tester tester, Pipeline pipeline, IGitStrategy gitStrategy, Project project, INotificationService notificationService)
         {
             Title = title;
             StartDate = startDate;
@@ -27,6 +30,7 @@ namespace Domain.Sprints
 
             //Navigation properties
             _project = project;
+            _notificationService = notificationService;
         }
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Title { get; set; }

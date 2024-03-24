@@ -7,6 +7,7 @@ using Domain.Backlogs;
 using Domain.Backlogs.States;
 using Domain.Forums;
 using Domain.GeneralModels;
+using Domain.Notifications;
 using Domain.Pipelines;
 using Domain.Roles;
 using Domain.Sprints.Factory;
@@ -28,11 +29,12 @@ namespace UnitTests
 
             project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7),
                 Constants.ExampleScrumMaster, Constants.ExampleTester, pipeline, new GitStrategy(),
-                SprintType.Release);
+                SprintType.Release, new NotificationService());
 
             var releaseSprint = project.Sprints.First();
             var backlogItem =
-                new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, releaseSprint);
+                new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, releaseSprint,
+                    new NotificationService());
 
 
             //Act
@@ -57,13 +59,14 @@ namespace UnitTests
 
             project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7),
                 Constants.ExampleScrumMaster, Constants.ExampleTester, pipeline, new GitStrategy(),
-                SprintType.Release);
+                SprintType.Release, new NotificationService());
 
             var otherDev = new Developer("Other Developer", "otherDev@email.nl", "password");
 
             var releaseSprint = project.Sprints.First();
             var backlogItem =
-                new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, releaseSprint);
+                new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, releaseSprint,
+                    new NotificationService());
             var task = new Domain.Backlogs.Task("ExampleTask", "ExampleDescription", otherDev,
                 releaseSprint);
 
@@ -90,12 +93,13 @@ namespace UnitTests
 
             project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7),
                 Constants.ExampleScrumMaster, Constants.ExampleTester, pipeline, new GitStrategy(),
-                SprintType.Release);
+                SprintType.Release, new NotificationService());
 
             var releaseSprint = project.Sprints.First();
 
             var backlogItem =
-                new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, releaseSprint);
+                new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, releaseSprint,
+                    new NotificationService());
             var thread = new Threads("ExampleTitle", "ExampleDescription", backlogItem);
             var message = new Message("ExampleMessage", Constants.ExampleDeveloper);
 
@@ -121,12 +125,13 @@ namespace UnitTests
 
             project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7),
                 Constants.ExampleScrumMaster, Constants.ExampleTester, pipeline, new GitStrategy(),
-                SprintType.Release);
+                SprintType.Release, new NotificationService());
 
             var releaseSprint = project.Sprints.First();
 
             var backlogItem =
-                new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, releaseSprint);
+                new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, releaseSprint,
+                    new NotificationService());
 
             releaseSprint.AddBacklogItem(backlogItem);
 
@@ -148,12 +153,13 @@ namespace UnitTests
 
             project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7),
                 Constants.ExampleScrumMaster, Constants.ExampleTester, pipeline, new GitStrategy(),
-                SprintType.Release);
+                SprintType.Release, new NotificationService());
 
             var releaseSprint = project.Sprints.First();
 
             var backlogItem =
-                new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, releaseSprint);
+                new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, releaseSprint,
+                    new NotificationService());
 
             releaseSprint.AddBacklogItem(backlogItem);
 
@@ -175,12 +181,13 @@ namespace UnitTests
 
             project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7),
                 Constants.ExampleScrumMaster, Constants.ExampleTester, pipeline, new GitStrategy(),
-                SprintType.Release);
+                SprintType.Release, new NotificationService());
 
             var releaseSprint = project.Sprints.First();
 
             var backlogItem =
-                new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, releaseSprint);
+                new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, releaseSprint,
+                    new NotificationService());
 
             releaseSprint.AddBacklogItem(backlogItem);
 
@@ -203,12 +210,13 @@ namespace UnitTests
 
             project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7),
                 Constants.ExampleScrumMaster, Constants.ExampleTester, pipeline, new GitStrategy(),
-                SprintType.Release);
+                SprintType.Release, new NotificationService());
 
             var releaseSprint = project.Sprints.First();
 
             var backlogItem =
-                new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, releaseSprint);
+                new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, releaseSprint,
+                    new NotificationService());
 
             releaseSprint.AddBacklogItem(backlogItem);
 
@@ -224,20 +232,21 @@ namespace UnitTests
         [Fact]
         public void BacklogItem_Can_Be_Moved_To_Testing()
         {
-                        //Arrange
+            //Arrange
             var pipeline = new Pipeline("Pipeline 1");
             var project = new Project("Project Alpha", "This is a test project",
-                               Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(),
-                                              new VersionControlFactory());
+                Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(),
+                new VersionControlFactory());
 
             project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7),
-                               Constants.ExampleScrumMaster, Constants.ExampleTester, pipeline, new GitStrategy(),
-                                              SprintType.Release);
+                Constants.ExampleScrumMaster, Constants.ExampleTester, pipeline, new GitStrategy(),
+                SprintType.Release, new NotificationService());
 
             var releaseSprint = project.Sprints.First();
 
             var backlogItem =
-                new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, releaseSprint);
+                new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, releaseSprint,
+                    new NotificationService());
 
             releaseSprint.AddBacklogItem(backlogItem);
 
@@ -254,20 +263,21 @@ namespace UnitTests
         [Fact]
         public void BacklogItem_Can_Be_Moved_To_Tested()
         {
-                        //Arrange
+            //Arrange
             var pipeline = new Pipeline("Pipeline 1");
             var project = new Project("Project Alpha", "This is a test project",
-                                              Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(),
-                                                                                           new VersionControlFactory());
+                Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(),
+                new VersionControlFactory());
 
             project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7),
-                                              Constants.ExampleScrumMaster, Constants.ExampleTester, pipeline, new GitStrategy(),
-                                                                                           SprintType.Release);
+                Constants.ExampleScrumMaster, Constants.ExampleTester, pipeline, new GitStrategy(),
+                SprintType.Release, new NotificationService());
 
             var releaseSprint = project.Sprints.First();
 
             var backlogItem =
-                new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, releaseSprint);
+                new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, releaseSprint,
+                    new NotificationService());
 
             releaseSprint.AddBacklogItem(backlogItem);
 

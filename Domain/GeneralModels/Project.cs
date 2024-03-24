@@ -1,4 +1,5 @@
 ﻿using Domain.Backlogs;
+using Domain.Notifications.Interfaces;
 using Domain.Pipelines;
 using Domain.Pipelines.Visitor;
 using Domain.Roles;
@@ -30,10 +31,11 @@ namespace Domain.GeneralModels
         public IGitStrategy GetGitStrategy() => GitStrategy;
 
         public void CreateSprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster,
-            Tester tester, Pipeline pipeline, IGitStrategy gitStrategy, SprintType sprintType)
+            Tester tester, Pipeline pipeline, IGitStrategy gitStrategy, SprintType sprintType,
+            INotificationService notificationService)
         {
             var sprint = sprintFactory.CreateSprint(title, startDate, endDate, scrumMaster, tester, pipeline,
-                gitStrategy, this, sprintType);
+                gitStrategy, this, sprintType, notificationService);
             Sprints.Add(sprint);
         }
     }

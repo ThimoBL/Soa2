@@ -17,6 +17,7 @@ using Domain.VersionControl;
 using Domain.VersionControl.Factory;
 using Moq;
 using System.Diagnostics.Metrics;
+using Domain.Notifications;
 
 namespace UnitTests
 {
@@ -28,11 +29,12 @@ namespace UnitTests
             // Arrange
             var pipeline = new Pipeline("Pipeline 1");
             var project = new Project("Project Alpha", "This is a test project",
-                               Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(), new VersionControlFactory());
+                Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(),
+                new VersionControlFactory());
 
             // Act
             project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), Constants.ExampleScrumMaster,
-                               Constants.ExampleTester, pipeline, new GitStrategy(), SprintType.Review);
+                Constants.ExampleTester, pipeline, new GitStrategy(), SprintType.Review, new NotificationService());
 
             var reviewSprint = project.Sprints.First();
 
@@ -46,11 +48,12 @@ namespace UnitTests
             // Arrange
             var pipeline = new Pipeline("Pipeline 1");
             var project = new Project("Project Alpha", "This is a test project",
-                                              Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(), new VersionControlFactory());
+                Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(),
+                new VersionControlFactory());
 
             // Act
             project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), Constants.ExampleScrumMaster,
-                                              Constants.ExampleTester, pipeline, new GitStrategy(), SprintType.Release);
+                Constants.ExampleTester, pipeline, new GitStrategy(), SprintType.Release, new NotificationService());
 
             var releaseSprint = project.Sprints.First();
 
@@ -64,10 +67,11 @@ namespace UnitTests
             // Arrange
             var pipeline = new Pipeline("Pipeline 1");
             var project = new Project("Project Alpha", "This is a test project",
-                Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(), new VersionControlFactory());
+                Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(),
+                new VersionControlFactory());
 
             project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), Constants.ExampleScrumMaster,
-                Constants.ExampleTester, pipeline, new GitStrategy(), SprintType.Release);
+                Constants.ExampleTester, pipeline, new GitStrategy(), SprintType.Release, new NotificationService());
 
             var releaseSprint = project.Sprints.First();
 
@@ -90,10 +94,11 @@ namespace UnitTests
             var mockPipeline = new Mock<Pipeline>("Pipeline 1");
 
             var project = new Project("Project Alpha", "This is a test project",
-                Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(), new VersionControlFactory());
+                Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(),
+                new VersionControlFactory());
 
             project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), Constants.ExampleScrumMaster,
-                tester, mockPipeline.Object, new GitStrategy(), SprintType.Release);
+                tester, mockPipeline.Object, new GitStrategy(), SprintType.Release, new NotificationService());
 
             var releaseSprint = project.Sprints.First();
 
@@ -115,10 +120,11 @@ namespace UnitTests
             var tester = new Tester("John Doe", "Johndoe@email.com", "password");
             var pipeline = new Pipeline("Pipeline 1");
             var project = new Project("Project Alpha", "This is a test project",
-                Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(), new VersionControlFactory());
+                Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(),
+                new VersionControlFactory());
 
             project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), Constants.ExampleScrumMaster,
-                tester, pipeline, new GitStrategy(), SprintType.Review);
+                tester, pipeline, new GitStrategy(), SprintType.Review, new NotificationService());
 
             var reviewSprint = project.Sprints.First();
 
@@ -136,10 +142,11 @@ namespace UnitTests
             var tester = new Tester("John Doe", "Johndoe@email.com", "password");
             var pipeline = new Pipeline("Pipeline 1");
             var project = new Project("Project Alpha", "This is a test project",
-                Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(), new VersionControlFactory());
+                Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(),
+                new VersionControlFactory());
 
             project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), Constants.ExampleScrumMaster,
-                tester, pipeline, new GitStrategy(), SprintType.Release);
+                tester, pipeline, new GitStrategy(), SprintType.Release, new NotificationService());
 
             var reviewSprint = project.Sprints.First();
 

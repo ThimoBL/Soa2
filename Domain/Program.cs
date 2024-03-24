@@ -99,7 +99,7 @@ pipeline.AddAction(compositeDeployAction);
 pipeline.AddAction(new UtilityAction());
 
 var sprint = sprintFactory.CreateSprint("Sprint 1", DateTime.Now, DateTime.Now.AddDays(14),
-    scrumMaster, tester, pipeline, new GitStrategy(), project, SprintType.Release);
+    scrumMaster, tester, pipeline, new GitStrategy(), project, SprintType.Release, new NotificationService());
 
 sprint.ChangeState(new FinishedState(sprint));
 sprint.NextSprintState();

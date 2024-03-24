@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.GeneralModels;
+using Domain.Notifications;
 using Domain.Pipelines;
 using Domain.Pipelines.Actions.AnalyzeAction;
 using Domain.Pipelines.Actions.AnalyzeAction.SonarCube;
@@ -127,7 +128,7 @@ namespace UnitTests
 
             var mockSprint = new Mock<ReleaseSprint>("Sprint 1", DateTime.Now, DateTime.Now.AddDays(7),
                 Constants.ExampleScrumMaster, Constants.ExampleTester, pipeline, new GitStrategy(),
-                project);
+                project, new NotificationService());
 
             //Act
             mockSprint.Object.RunPipeline();

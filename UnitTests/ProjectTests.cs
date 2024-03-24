@@ -1,6 +1,7 @@
 using Domain;
 using Domain.Backlogs;
 using Domain.GeneralModels;
+using Domain.Notifications;
 using Domain.Pipelines;
 using Domain.Roles;
 using Domain.Sprints.Factory;
@@ -40,11 +41,12 @@ namespace UnitTests
                 new VersionControlFactory());
             project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7),
                 Constants.ExampleScrumMaster, Constants.ExampleTester, new Pipeline("Pipeline 1"), new GitStrategy(),
-                SprintType.Release);
+                SprintType.Release, new NotificationService());
 
             var sprint = project.Sprints.First();
             var backlogItem =
-                new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, sprint);
+                new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, sprint,
+                    new NotificationService());
 
             //Act
             project.AddBacklog(backlogItem);
