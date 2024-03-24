@@ -16,7 +16,9 @@ namespace Domain.Sprints
     {
         private readonly Project _project;
         private readonly INotificationService _notificationService;
-        protected Sprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster, Tester tester, Pipeline pipeline, IGitStrategy gitStrategy, Project project, INotificationService notificationService)
+
+        protected Sprint(string title, DateTime startDate, DateTime endDate, ScrumMaster scrumMaster, Tester tester,
+            Pipeline pipeline, IGitStrategy gitStrategy, Project project, INotificationService notificationService)
         {
             Title = title;
             StartDate = startDate;
@@ -32,6 +34,7 @@ namespace Domain.Sprints
             _project = project;
             _notificationService = notificationService;
         }
+
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Title { get; set; }
         public DateTime StartDate { get; set; }
@@ -60,5 +63,12 @@ namespace Domain.Sprints
         public abstract void UploadReview();
 
         public virtual bool IsReviewUploaded() => false;
+
+        public virtual void NotifyTester(string message) =>
+            _notificationService.SendSingleNotification(Tester, message);
+
+
+        public virtual void NotifyScrumMaster(string message) =>
+            _notificationService.SendSingleNotification(ScrumMaster, message);
     }
 }

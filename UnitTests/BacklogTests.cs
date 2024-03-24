@@ -68,7 +68,7 @@ namespace UnitTests
                 new BacklogItem("ExampleTitle", "ExampleDescription", 3, Constants.ExampleDeveloper, releaseSprint,
                     new NotificationService());
             var task = new Domain.Backlogs.Task("ExampleTask", "ExampleDescription", otherDev,
-                releaseSprint);
+                releaseSprint, new NotificationService());
 
             releaseSprint.AddBacklogItem(backlogItem);
 

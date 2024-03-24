@@ -14,7 +14,7 @@ namespace Domain.Roles
         public string Email { get; set; } = email;
         public string Password { get; set; } = password;
         public List<IPublisher> Preferences { get; set; } = new();
-        public void Notify()
+        public virtual void Notify()
         {
             foreach (var preference in Preferences)
             {

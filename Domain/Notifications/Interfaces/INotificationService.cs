@@ -12,5 +12,6 @@ namespace Domain.Notifications.Interfaces
         void Subscribe(User user);
         void Unsubscribe(User user);
         void SendNotification(string message);
+        void SendSingleNotification(ISubscriber user, string message);
     }
 }

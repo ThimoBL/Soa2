@@ -5,9 +5,8 @@ using Domain.Sprints;
 namespace Domain.Backlogs
 {
     public class BacklogItem(string title, string description, int storyPoints, Developer developer, Sprint sprint,
-        INotificationService notificationService) : Item(title, description, developer, sprint)
+        INotificationService notificationService) : Item(title, description, developer, sprint, notificationService)
     {
-        private readonly INotificationService _notificationService = notificationService;
         //Navigation property
         public int StoryPoints { get; set; } = storyPoints;
         public IList<Task> Tasks { get; set; } = new List<Task>();

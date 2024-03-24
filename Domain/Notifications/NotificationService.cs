@@ -29,5 +29,10 @@ namespace Domain.Notifications
                 listener.Notify();
             }
         }
+
+        public void SendSingleNotification(ISubscriber listener, string message)
+        {
+            listener.Notify();
+        }
     }
 }

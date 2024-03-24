@@ -10,6 +10,7 @@ namespace Domain.Backlogs.States
     {
         public ReadyForTestingState(Item item) : base(item)
         {
+            item.GetSprint().NotifyTester($"Item {item.Title} is ready for testing");
         }
 
         public override void SetState()
