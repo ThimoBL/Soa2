@@ -50,10 +50,13 @@ namespace UnitTests
             mockPipeline.Object.AddAction(Constants.DeployAction);
             mockPipeline.Object.AddAction(Constants.UtilityAction);
 
-            Constants.ProjectExample.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), Constants.ExampleScrumMaster,
+            var project = new Project("Project Alpha", "This is a test project",
+                Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(), new VersionControlFactory());
+
+            project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), Constants.ExampleScrumMaster,
                 tester, mockPipeline.Object, new GitStrategy(), SprintType.Release);
 
-            var releaseSprint = Constants.ProjectExample.Sprints.First();
+            var releaseSprint = project.Sprints.First();
 
             //Act
             releaseSprint.ChangeState(new FinishedState(releaseSprint));
@@ -68,11 +71,13 @@ namespace UnitTests
             //Arrange
             var tester = new Tester("John Doe", "Johndoe@email.com", "password");
             var pipeline = new Pipeline("Pipeline 1");
+            var project = new Project("Project Alpha", "This is a test project",
+                Constants.ExampleProductOwner, VersionControlTypes.Git, new SprintFactory(), new VersionControlFactory());
 
-            Constants.ProjectExample.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), Constants.ExampleScrumMaster,
+            project.CreateSprint("John Doe", DateTime.Now, DateTime.Now.AddDays(7), Constants.ExampleScrumMaster,
                 tester, pipeline, new GitStrategy(), SprintType.Review);
 
-            var reviewSprint = Constants.ProjectExample.Sprints.First();
+            var reviewSprint = project.Sprints.First();
 
             //Act
             reviewSprint.UploadReview();
