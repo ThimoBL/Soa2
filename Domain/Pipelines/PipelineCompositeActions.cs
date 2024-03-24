@@ -16,11 +16,6 @@ namespace Domain.Pipelines
             _actions.Add(action);
         }
 
-        public void RemoveAction(PipelineActions action)
-        {
-            _actions.Remove(action);
-        }
-
         public override void AcceptPipeline(IPipelineVisitor visitor)
         {
             foreach (var action in _actions)

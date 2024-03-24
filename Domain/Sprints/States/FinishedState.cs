@@ -21,10 +21,7 @@ namespace Domain.Sprints.States
             }
         }
 
-        public override void SetState()
-        {
-            _sprint.ChangeState(new FinishedState(_sprint));
-        }
+        public override void SetState() => _sprint.ChangeState(new FinishedState(_sprint));
 
         public override void NextState()
         {

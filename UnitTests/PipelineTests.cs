@@ -135,5 +135,85 @@ namespace UnitTests
             //Assert
             mockSprint.Verify(x => x.RunPipeline(), Times.AtLeastOnce);
         }
+
+        [Fact]
+        public void Can_Run_Pipeline_With_Full_Actions()
+        {
+            //Arrange
+            var mockPipeline = new Mock<Pipeline>("Pipeline 1");
+            var visitor = new Mock<IPipelineVisitor>();
+
+            //Analyze action
+            var compositeAnalyzeAction = new AnalyzeSonarCubeCompositeAction();
+            var sonarCubePreparation = new SonarCubePreparationAction();
+            var sonarCubeReporting = new SonarCubeReportingAction();
+            var sonarCubeExecution = new SonarCubeExecutionAction();
+
+            compositeAnalyzeAction.AddAction(sonarCubePreparation);
+            compositeAnalyzeAction.AddAction(sonarCubeReporting);
+            compositeAnalyzeAction.AddAction(sonarCubeExecution);
+
+            //Build action
+            var compositeBuildAction = new BuildCompositeAction();
+            var buildMavenAction = new BuildMavenAction();
+            var buildDotNetAction = new BuildDotNetAction();
+            var buildJenkinsAction = new BuildJenkinsAction();
+            var buildAntAction = new BuildAntAction();
+
+            compositeBuildAction.AddAction(buildMavenAction);
+            compositeBuildAction.AddAction(buildDotNetAction);
+            compositeBuildAction.AddAction(buildJenkinsAction);
+            compositeBuildAction.AddAction(buildAntAction);
+
+            //Deploy action
+            var compositeDeployAction = new DeployCompositeAction();
+            var deployAzureAction = new DeployAzureAction();
+            var deployGithubAction = new DeployGithubAction();
+
+            compositeDeployAction.AddAction(deployAzureAction);
+            compositeDeployAction.AddAction(deployGithubAction);
+
+            //Source action
+            var compositeSourceAction = new SourceCompositeAction();
+            var sourceGithubAction = new SourceGithubAction();
+            var sourceAzureAction = new SourceAzureAction();
+
+            compositeSourceAction.AddAction(sourceGithubAction);
+            compositeSourceAction.AddAction(sourceAzureAction);
+
+            //Test action
+            var compositeTestAction = new TestCompositeAction();
+            var testNUnitAction = new TestNUnitAction();
+            var testSeleniumAction = new TestSeleniumAction();
+
+            compositeTestAction.AddAction(testNUnitAction);
+            compositeTestAction.AddAction(testSeleniumAction);
+
+            mockPipeline.Object.AddAction(compositeSourceAction);
+            mockPipeline.Object.AddAction(new PackageInstallAction());
+            mockPipeline.Object.AddAction(compositeBuildAction);
+            mockPipeline.Object.AddAction(compositeTestAction);
+            mockPipeline.Object.AddAction(compositeAnalyzeAction);
+            mockPipeline.Object.AddAction(compositeDeployAction);
+            mockPipeline.Object.AddAction(new UtilityAction());
+
+            //Act
+            visitor.Object.Visit(compositeSourceAction);
+            visitor.Object.Visit(new PackageInstallAction());
+            visitor.Object.Visit(compositeBuildAction);
+            visitor.Object.Visit(compositeTestAction);
+            visitor.Object.Visit(compositeAnalyzeAction);
+            visitor.Object.Visit(compositeDeployAction);
+            visitor.Object.Visit(new UtilityAction());
+
+            //Assert
+            visitor.Verify(x => x.Visit(compositeSourceAction), Times.AtLeastOnce);
+            visitor.Verify(x => x.Visit(It.IsAny<PackageInstallAction>()), Times.AtLeastOnce);
+            visitor.Verify(x => x.Visit(compositeBuildAction), Times.AtLeastOnce);
+            visitor.Verify(x => x.Visit(compositeTestAction), Times.AtLeastOnce);
+            visitor.Verify(x => x.Visit(compositeAnalyzeAction), Times.AtLeastOnce);
+            visitor.Verify(x => x.Visit(compositeDeployAction), Times.AtLeastOnce);
+            visitor.Verify(x => x.Visit(It.IsAny<UtilityAction>()), Times.AtLeastOnce);
+        }
     }
 }

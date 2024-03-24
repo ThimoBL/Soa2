@@ -56,7 +56,5 @@ namespace Domain.Sprints
         public abstract void UploadReview();
 
         public virtual bool IsReviewUploaded() => false;
-
-        public IList<BacklogItem> GetBacklogItems() => SprintBacklogItems;
     }
 }
