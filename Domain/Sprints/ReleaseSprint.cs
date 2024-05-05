@@ -25,7 +25,7 @@ namespace Domain.Sprints
 
         public override void RunPipeline()
         {
-            Console.WriteLine($"=-=-=-= {Pipeline.Name} starting... =-=-=-=");
+            Console.WriteLine($"=-=-=-= {Pipeline.Name} starting..   . =-=-=-=");
             Pipeline.AcceptPipeline(new PipelineVisitor());
         }
 
