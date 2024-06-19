@@ -9,6 +9,6 @@ namespace Domain.Rapport.Factory
 {
     public interface IRapportFactory
     {
-        void CreateRapport(Footer? footer, Header? header, Body body, RapportTypes type)
+        void CreateRapport(Footer? footer, Header? header, Body body, RapportTypes type);
     }
 }

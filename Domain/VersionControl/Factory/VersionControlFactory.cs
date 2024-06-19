@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.VersionControl.Interfaces;
+using Domain.VersionControl.Strategy;
 
 namespace Domain.VersionControl.Factory
 {

@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.GeneralModels;
 using Domain.Sprints.Factory;
-using Domain.VersionControl;
 using Domain.VersionControl.Factory;
+using Domain.VersionControl.Strategy;
 using Moq;
 
 namespace UnitTests

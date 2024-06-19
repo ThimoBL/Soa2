@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.VersionControl.Interfaces;
 
-namespace Domain.VersionControl
+namespace Domain.VersionControl.Strategy
 {
     public class GitStrategy : IGitStrategy
     {

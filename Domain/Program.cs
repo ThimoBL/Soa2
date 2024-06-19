@@ -16,6 +16,7 @@ using Domain.Sprints.Factory;
 using Domain.Sprints.States;
 using Domain.VersionControl;
 using Domain.VersionControl.Factory;
+using Domain.VersionControl.Strategy;
 using Microsoft.Extensions.DependencyInjection;
 
 Console.WriteLine("Starting domain...");
