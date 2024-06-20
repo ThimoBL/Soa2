@@ -15,6 +15,7 @@ using Domain.Notifications.Interfaces;
 using Domain.Roles;
 using Moq;
 using Domain.Sprints;
+using Domain.VersionControl.Strategy;
 
 namespace UnitTests
 {

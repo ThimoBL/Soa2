@@ -18,6 +18,7 @@ using Domain.VersionControl.Factory;
 using Moq;
 using System.Diagnostics.Metrics;
 using Domain.Notifications;
+using Domain.VersionControl.Strategy;
 
 namespace UnitTests
 {

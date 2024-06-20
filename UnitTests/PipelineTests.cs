@@ -20,6 +20,7 @@ using Domain.VersionControl;
 using Moq;
 using Domain.Sprints;
 using Domain.Pipelines.Actions.UtilityAction;
+using Domain.VersionControl.Strategy;
 
 namespace UnitTests
 {

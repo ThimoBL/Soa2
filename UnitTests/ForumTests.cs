@@ -12,6 +12,7 @@ using Domain.Pipelines;
 using Domain.Sprints.Factory;
 using Domain.VersionControl;
 using Domain.VersionControl.Factory;
+using Domain.VersionControl.Strategy;
 
 namespace UnitTests
 {
